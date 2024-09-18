@@ -46,7 +46,7 @@ public class View implements PropertyChangeListener {
                     activo.setCodigo(codigo.getText());
                     controller.search(activo);
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    throw new RuntimeException("error consultando activo", ex);
                 }
             }
         });
@@ -62,7 +62,7 @@ public class View implements PropertyChangeListener {
                 try {
                     controller.save(take());
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    throw new RuntimeException("error guardando activo", ex);
                 }
             }
         });
@@ -97,8 +97,14 @@ public class View implements PropertyChangeListener {
                 Integer restaEdad = 2024 - Integer.parseInt(fabricacion.getText());
                 edad.setText("" + restaEdad);
 
-                Double restaValorActual = Double.parseDouble(valor.getText()) - (Double.parseDouble(depreciacion.getText())*restaEdad);
-                depreciacion.setText("" + restaValorActual);
+                if(Integer.parseInt(fabricacion.getText())==0)
+                    edad.setText("0");
+
+                Double restaDepreciacion = depreciacionSegunCategoria()*Double.parseDouble(valor.getText())*restaEdad;
+                depreciacion.setText("" + restaDepreciacion);
+                Double restaValorActual = Double.parseDouble(valor.getText()) - restaDepreciacion;
+
+                valorActual.setText("" + restaValorActual);
 
                 edad.setEnabled(false);
                 depreciacion.setEnabled(false);
@@ -134,13 +140,13 @@ public class View implements PropertyChangeListener {
         if(categoriaCB.getSelectedIndex() == 0){return 0.0;}
         switch (categoriaCB.getSelectedItem().toString()){
             case "computadora (5 anios)":
-                return 1000;
+                return 0.2;
 
             case "vehiculo (10 anios)":
-                return 2000;
+                return 0.1;
 
             case "casa (20 anios)":
-                return 4000;
+                return 0.05;
         }
             return 0;
     }

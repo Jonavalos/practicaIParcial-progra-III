@@ -40,7 +40,7 @@ public class Service {
             create(e.getCategoria());
             data.getActivos().add(e);
         }
-        else throw new Exception("Producto ya existe");
+        else throw new Exception("Error create service :(");
     }
 
     public Activo read(Activo e) throws Exception{
@@ -49,7 +49,7 @@ public class Service {
             result.setCategoria(read(result.getCategoria()));
             return result;
         }
-        else throw new Exception("Producto no existe");
+        else throw new Exception("Error read service :(");
     }
 
     public void update(Activo e) throws Exception{
@@ -59,7 +59,7 @@ public class Service {
             data.getActivos().remove(result);
             data.getActivos().add(e);
         }catch (Exception ex) {
-            throw new Exception("Producto no existe");
+            throw new Exception("Error update service :(");
         }
     }
 
