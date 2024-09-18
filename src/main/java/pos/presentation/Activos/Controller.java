@@ -6,6 +6,8 @@ import pos.logic.Activo;
 import pos.logic.Service;
 import pos.presentation.Activos.View;
 
+import java.util.Objects;
+
 
 public class Controller {
     View view;
@@ -22,6 +24,8 @@ public class Controller {
         model.setFilter(filter);
         model.setMode(Application.MODE_EDIT);
         model.setCurrent(Service.instance().read(filter)); //re setear el current
+        if((Service.instance().read(filter)==null))
+            model.setMode(Application.MODE_CREATE);
     }
 
     public void save(Activo e) throws  Exception{
