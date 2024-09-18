@@ -66,4 +66,9 @@ public class Activo {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+    public void setCategoria(String codigo) {
+        if(categoria == null)
+            categoria = new Categoria();
+        this.categoria.setNombre(codigo);
+    }
 }
