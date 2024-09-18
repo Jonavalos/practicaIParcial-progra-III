@@ -24,10 +24,10 @@ public class Controller {
     public void search(Activo filter) throws  Exception{
         try{
             model.setFilter(filter);
-            model.setMode(Application.MODE_EDIT);
+            if((Service.instance().read(filter)!=null))
+                model.setMode(Application.MODE_EDIT);
             model.setCurrent(Service.instance().read(filter)); //re setear el current
-            if((Service.instance().read(filter)==null))
-                model.setMode(Application.MODE_CREATE);
+            model.setMode(Application.MODE_CREATE);
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
         }
