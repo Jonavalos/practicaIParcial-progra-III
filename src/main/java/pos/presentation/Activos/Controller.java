@@ -3,6 +3,7 @@ package pos.presentation.Activos;
 
 import pos.Application;
 import pos.logic.Activo;
+import pos.logic.Categoria;
 import pos.logic.Service;
 import pos.presentation.Activos.View;
 
@@ -20,14 +21,17 @@ public class Controller {
         this.model = model;
         view.setController(this);
         view.setModel(model);
+        model.setCategorias(Service.instance().search(new Categoria()));
     }
     public void search(Activo filter) throws  Exception{
         try{
             model.setFilter(filter);
             if((Service.instance().read(filter)!=null))
                 model.setMode(Application.MODE_EDIT);
+            else{
+                model.setMode(Application.MODE_CREATE);
+            }
             model.setCurrent(Service.instance().read(filter)); //re setear el current
-            model.setMode(Application.MODE_CREATE);
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
         }

@@ -37,7 +37,7 @@ public class Service {
     public void create(Activo e) throws Exception {
         Activo result = data.getActivos().stream().filter(i -> i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result == null) {
-            create(e.getCategoria());
+            //create(e.getCategoria());
             data.getActivos().add(e);
         }
         else throw new Exception("Error create service :(");

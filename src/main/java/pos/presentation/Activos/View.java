@@ -11,6 +11,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
+import static pos.presentation.Activos.Model.CATEGORIAS;
+
 public class View implements PropertyChangeListener {
     private JLabel codigoLbl;
     private JTextField codigo;
@@ -46,7 +48,7 @@ public class View implements PropertyChangeListener {
                     activo.setCodigo(codigo.getText());
                     controller.search(activo);
                 } catch (Exception ex) {
-                    throw new RuntimeException("error consultando activo", ex);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -62,7 +64,7 @@ public class View implements PropertyChangeListener {
                 try {
                     controller.save(take());
                 } catch (Exception ex) {
-                    throw new RuntimeException("error guardando activo", ex);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -89,7 +91,7 @@ public class View implements PropertyChangeListener {
                 activo.setText(model.getCurrent().getNombre());
                 fabricacion.setText("" + model.getCurrent().getFabricacion());
                 valor.setText("" + model.getCurrent().getValorInicial());
-                categoriaCB.setSelectedItem(model.getCurrent().getCategoria().getNombre());
+                categoriaCB.setSelectedItem(model.getCurrent().getCategoria());
                 edad.setText("" + 10);
                 depreciacion.setText("" + 10);
                 valorActual.setText("" + 10);
@@ -121,6 +123,10 @@ public class View implements PropertyChangeListener {
             case Model.FILTER:
                 codigo.setText(model.getFilter().getCodigo());
                 break;
+
+            case CATEGORIAS:
+                categoriaCB.setModel(model.getCategorias());
+
         }
     }
     public Activo take() throws Exception{
@@ -132,7 +138,7 @@ public class View implements PropertyChangeListener {
         }
         e.setFabricacion(Integer.parseInt(fabricacion.getText()));
         e.setValorInicial(Double.parseDouble(valor.getText()));
-        e.setCategoria(convertirCategoria());
+        e.setCategoria((Categoria)categoriaCB.getSelectedItem() );
         return e;
     }
 
