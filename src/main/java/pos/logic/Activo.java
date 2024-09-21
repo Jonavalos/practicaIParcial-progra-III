@@ -3,6 +3,7 @@ package pos.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ public class Activo {
     String nombre;
     int fabricacion;    //anio
     double valorInicial;
+    @XmlIDREF //guarda la referencia en lugar de un objeto nuevo, porque ya existe
     Categoria categoria;
 
     public Activo(){
