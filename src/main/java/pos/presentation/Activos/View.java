@@ -124,7 +124,7 @@ public class View implements PropertyChangeListener {
                 codigo.setText(model.getFilter().getCodigo());
                 break;
 
-            case CATEGORIAS:
+            case Model.CATEGORIAS:
                 categoriaCB.setModel(model.getCategorias());
 
         }
